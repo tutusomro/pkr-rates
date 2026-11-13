@@ -49,7 +49,15 @@ const TEXT = {
     netWealth: "Net wealth: ",
     nisabIs: "Nisab: ",
     notDue: "Your wealth is below the Nisab, so Zakat is not due.",
-    zakatDue: "Zakat due: "
+    zakatDue: "Zakat due: ",
+
+    aboutTitle: "About these rates",
+    aboutP1: "Prices are shown in Pakistani rupees per tola (1 tola = 11.664 grams). Gold is 24K; the 22K and 21K prices are worked out from it.",
+    aboutP2: "Market prices change during the day and can differ by city and shop, so confirm with your jeweller before buying or selling.",
+    howTitle: "How Zakat is calculated",
+    howP1: "Zakat is 2.5% of your net savings and assets, if your wealth has stayed above the Nisab for one full lunar year.",
+    howP2: "The Nisab is the minimum amount. In the Hanafi view used in Pakistan it equals the value of 52.5 tola (about 612 grams) of silver. The gold Nisab is 7.5 tola (about 87.5 grams).",
+    howP3: "Include cash, bank savings, gold, silver, business stock and money owed to you. Subtract debts you must pay soon."
   },
 
   ur: {
@@ -96,7 +104,15 @@ const TEXT = {
     netWealth: "خالص دولت: ",
     nisabIs: "نصاب: ",
     notDue: "آپ کی دولت نصاب سے کم ہے، اس لیے زکوٰۃ واجب نہیں۔",
-    zakatDue: "واجب زکوٰۃ: "
+    zakatDue: "واجب زکوٰۃ: ",
+
+    aboutTitle: "ان ریٹس کے بارے میں",
+    aboutP1: "قیمتیں پاکستانی روپوں میں فی تولہ دکھائی گئی ہیں (1 تولہ = 11.664 گرام)۔ سونا 24 قیراط کا ہے، اور 22 اور 21 قیراط کی قیمت اس سے نکالی گئی ہے۔",
+    aboutP2: "منڈی میں قیمتیں دن میں بدلتی رہتی ہیں اور شہر اور دکان کے لحاظ سے مختلف ہو سکتی ہیں، اس لیے خریدنے یا بیچنے سے پہلے اپنے جیولر سے تصدیق کریں۔",
+    howTitle: "زکوٰۃ کیسے نکالی جاتی ہے",
+    howP1: "اگر آپ کی دولت پورے قمری سال تک نصاب سے زیادہ رہے تو آپ کی خالص بچت اور اثاثوں کا 2.5 فیصد زکوٰۃ ہے۔",
+    howP2: "نصاب وہ کم از کم مقدار ہے۔ پاکستان میں رائج حنفی طریقے میں یہ 52.5 تولہ (تقریباً 612 گرام) چاندی کی قیمت کے برابر ہے۔ سونے کا نصاب 7.5 تولہ (تقریباً 87.5 گرام) ہے۔",
+    howP3: "نقد رقم، بینک بچت، سونا، چاندی، کاروباری مال اور وہ رقم جو دوسروں کے ذمے ہے شامل کریں۔ جو قرض جلد ادا کرنا ہے وہ منہا کریں۔"
   }
 };
 
