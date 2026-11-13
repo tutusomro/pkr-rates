@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zakat Calculator Pakistan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-title="titleZakat">
+  <header>
+    <div class="top">
+      <h1 data-i18n="siteName">PKR Rates</h1>
+      <button class="lang-btn" onclick="toggleLang()" data-i18n="langBtn">اردو</button>
+    </div>
+    <div class="tagline" data-i18n="tagline">Gold, silver and dollar rates for Pakistan</div>
+    <nav>
+      <a href="index.html" data-i18n="navRates">Rates</a>
+      <a href="zakat.html" class="active" data-i18n="navZakat">Zakat Calculator</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="warn" id="notice"></div>
+
+    <div class="card">
+      <h2 data-i18n="zakatTitle">Zakat Calculator (PKR)</h2>
+      <div class="small" data-i18n="zakatIntro">Silver Nisab method (Hanafi). Zakat is 2.5% of your net wealth if it reaches the Nisab.</div>
+
+      <label for="cash" data-i18n="labelCash">Cash and bank savings (Rs)</label>
+      <input type="number" id="cash" placeholder="0" inputmode="decimal">
+
+      <label for="goldTola" data-i18n="labelGold">Gold you own (tola, 24K equivalent)</label>
+      <input type="number" id="goldTola" placeholder="0" inputmode="decimal">
+
+      <label for="silverTola" data-i18n="labelSilver">Silver you own (tola)</label>
+      <input type="number" id="silverTola" placeholder="0" inputmode="decimal">
+
+      <label for="business" data-i18n="labelBusiness">Business goods and investments (Rs)</label>
+      <input type="number" id="business" placeholder="0" inputmode="decimal">
+
+      <label for="debts" data-i18n="labelDebts">Debts you must pay (Rs)</label>
+      <input type="number" id="debts" placeholder="0" inputmode="decimal">
+
+      <label for="goldPrice" data-i18n="labelGoldPrice">Gold price per tola (Rs) - you can change it</label>
+      <input type="number" id="goldPrice" inputmode="decimal">
+
+      <label for="silverPrice" data-i18n="labelSilverPrice">Silver price per tola (Rs) - you can change it</label>
+      <input type="number" id="silverPrice" inputmode="decimal">
+
+      <button onclick="run()" data-i18n="calcBtn">Calculate Zakat</button>
+      <div id="result"></div>
+    </div>
+  </main>
+
+  <footer data-i18n="footerZakat">This is a guide only. For your own situation, ask a trusted scholar.</footer>
+
+  <script src="rates.js"></script>
+  <script src="calc.js"></script>
+  <script src="i18n.js"></script>
+  <script>
+    function money(x) { return "Rs " + Math.round(x).toLocaleString("en-US"); }
+
+    // Fill the price boxes from rates.js once, when the page opens.
+    // (Not inside render(), so we never overwrite what the person typed.)
+    document.getElementById("goldPrice").value = RATES.goldTola24k;
+    document.getElementById("silverPrice").value = RATES.silverTola;
+
+    var resultShown = false;
+
+    function run() {
+      function val(id) { return document.getElementById(id).value; }
+
+      var r = calculateZakat({
+        cash: val("cash"),
+        goldTola: val("goldTola"),
+        silverTola: val("silverTola"),
+        business: val("business"),
+        debts: val("debts"),
+        goldPrice: val("goldPrice"),
+        silverPrice: val("silverPrice")
+      });
+
+      var box = document.getElementById("result");
+      box.style.display = "block";
+      resultShown = true;
+
+      if (r.nisab === 0) {
+        box.textContent = t("needSilver");
+      } else if (!r.isDue) {
+        box.innerHTML = t("netWealth") + money(r.net) +
+          "<br>" + t("nisabIs") + money(r.nisab) +
+          "<br><b>" + t("notDue") + "</b>";
+      } else {
+        box.innerHTML = t("netWealth") + money(r.net) +
+          "<br>" + t("nisabIs") + money(r.nisab) +
+          "<br><b>" + t("zakatDue") + money(r.zakat) + "</b>";
+      }
+    }
+
+    // i18n.js calls this every time the language changes.
+    function render() {
+      document.getElementById("notice").textContent =
+        RATES.isLive ? t("zakatNoticeLive") + RATES.updated : t("zakatNoticeStarter");
+      if (resultShown) run();   // show the answer again in the new language
+    }
+
+    applyLang();
+  </script>
+</body>
+</html>

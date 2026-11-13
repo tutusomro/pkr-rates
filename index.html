@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pakistan Gold, Silver and Dollar Rates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-title="titleRates">
+  <header>
+    <div class="top">
+      <h1 data-i18n="siteName">PKR Rates</h1>
+      <button class="lang-btn" onclick="toggleLang()" data-i18n="langBtn">اردو</button>
+    </div>
+    <div class="tagline" data-i18n="tagline">Gold, silver and dollar rates for Pakistan</div>
+    <nav>
+      <a href="index.html" class="active" data-i18n="navRates">Rates</a>
+      <a href="zakat.html" data-i18n="navZakat">Zakat Calculator</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="warn" id="notice"></div>
+
+    <div class="card gold">
+      <h2>🪙 <span data-i18n="goldTitle">Gold (24K) per tola</span></h2>
+      <div class="big" id="gold24"></div>
+      <div class="small" id="goldOther"></div>
+    </div>
+
+    <div class="card silver">
+      <h2>⚪ <span data-i18n="silverTitle">Silver per tola</span></h2>
+      <div class="big" id="silver"></div>
+      <div class="small"><span data-i18n="nisabLine">Zakat Nisab (52.5 tola silver): </span><span id="nisab"></span></div>
+    </div>
+
+    <div class="card">
+      <h2>💱 <span data-i18n="currenciesTitle">Currencies in PKR</span></h2>
+      <table id="currencyTable"></table>
+    </div>
+
+    <a class="btn-link" href="zakat.html" data-i18n="goToZakat">Calculate your Zakat</a>
+  </main>
+
+  <footer data-i18n="footerRates">Rates are for information only. Always confirm with your jeweller or exchange.</footer>
+
+  <script src="rates.js"></script>
+  <script src="i18n.js"></script>
+  <script>
+    // Show numbers with commas, like 465,780
+    function money(x) { return "Rs " + Math.round(x).toLocaleString("en-US"); }
+
+    // Builds the parts of the page that come from rates.js.
+    // i18n.js calls this every time the language changes.
+    function render() {
+      document.getElementById("notice").textContent =
+        (RATES.isLive ? t("noticeLive") : t("noticeStarter")) + RATES.updated;
+
+      document.getElementById("gold24").textContent = money(RATES.goldTola24k);
+      document.getElementById("goldOther").textContent =
+        t("karat22") + money(RATES.goldTola24k * 22 / 24) +
+        "   |   " + t("karat21") + money(RATES.goldTola24k * 21 / 24);
+
+      document.getElementById("silver").textContent = money(RATES.silverTola);
+      document.getElementById("nisab").textContent = money(RATES.silverTola * 52.5);
+
+      var rows = "<tr><th>" + t("colCurrency") + "</th><th>" + t("colRate") + "</th></tr>";
+      RATES.currencies.forEach(function (c) {
+        rows += "<tr><td>" + c.code + " - " + t("cur_" + c.code) + "</td><td>Rs " + c.rate + "</td></tr>";
+      });
+      document.getElementById("currencyTable").innerHTML = rows;
+    }
+
+    applyLang();
+  </script>
+</body>
+</html>
